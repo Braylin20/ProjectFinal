@@ -23,11 +23,11 @@ namespace FinalProject.Services
             return await _context.Usuarios.FindAsync(id);
         }
 
-        public async Task<Usuarios> Save(Usuarios department)
+        public async Task<Usuarios> Save(Usuarios usuarios)
         {
-            _context.Usuarios.Add(department);
+            _context.Usuarios.Add(usuarios);
             await _context.SaveChangesAsync();
-            return department;
+            return usuarios;
         }
     }
 }

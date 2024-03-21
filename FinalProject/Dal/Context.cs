@@ -18,16 +18,16 @@ namespace FinalProject.Dal
         public DbSet<Abogados> Abogados { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Abogados>().HasData(new List<Abogados>()
-        {
-            new Abogados (){ AbogadoId=1,Nombre="Juan Perez",ColegioAbogadoId=234, UsuarioId=0 },
-            new Abogados (){ AbogadoId=2,Nombre="Elizabeth Mata" ,ColegioAbogadoId=233, UsuarioId=0},
-            new Abogados (){ AbogadoId=3,Nombre="Palito De Coco",ColegioAbogadoId=231, UsuarioId=0 }
-        });
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<Abogados>().HasData(new List<Abogados>()
+        //{
+        //    new Abogados (){ AbogadoId=1,Nombre="Juan Perez",ColegioAbogadoId=234, UsuarioId=0 },
+        //    new Abogados (){ AbogadoId=2,Nombre="Elizabeth Mata" ,ColegioAbogadoId=233, UsuarioId=0},
+        //    new Abogados (){ AbogadoId=3,Nombre="Palito De Coco",ColegioAbogadoId=231, UsuarioId=0 }
+        //});
+        //}
 
     }
 }
