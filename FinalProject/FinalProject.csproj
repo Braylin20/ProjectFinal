@@ -13,6 +13,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <ProjectReference Include="..\FinalProject.Client\FinalProject.Client.csproj" />
     <ProjectReference Include="..\Shared1\Shared1.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />

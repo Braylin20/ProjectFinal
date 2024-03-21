@@ -36,7 +36,12 @@ namespace FinalProject.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("AbogadoId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Abogados");
 
@@ -44,17 +49,23 @@ namespace FinalProject.Migrations
                         new
                         {
                             AbogadoId = 1,
-                            Nombre = "Juan Perez"
+                            ColegioAbogadoId = 234,
+                            Nombre = "Juan Perez",
+                            UsuarioId = 0
                         },
                         new
                         {
                             AbogadoId = 2,
-                            Nombre = "Elizabeth Mata"
+                            ColegioAbogadoId = 233,
+                            Nombre = "Elizabeth Mata",
+                            UsuarioId = 0
                         },
                         new
                         {
                             AbogadoId = 3,
-                            Nombre = "Palito De Coco"
+                            ColegioAbogadoId = 231,
+                            Nombre = "Palito De Coco",
+                            UsuarioId = 0
                         });
                 });
 
@@ -73,6 +84,8 @@ namespace FinalProject.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("AudienciaId");
+
+                    b.HasIndex("DemandaId");
 
                     b.ToTable("Audiencias");
                 });
@@ -99,6 +112,8 @@ namespace FinalProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("DemandaId");
+
+                    b.HasIndex("SentenciaId");
 
                     b.HasIndex("UsuarioId");
 
@@ -159,6 +174,28 @@ namespace FinalProject.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Expedientes");
+                });
+
+            modelBuilder.Entity("Shared.Models.Jueces", b =>
+                {
+                    b.Property<int>("JuezId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JuezId"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SentenciaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("JuezId");
+
+                    b.HasIndex("SentenciaId");
+
+                    b.ToTable("Jueces");
                 });
 
             modelBuilder.Entity("Shared.Models.Niños", b =>
@@ -281,8 +318,32 @@ namespace FinalProject.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("Shared.Models.Abogados", b =>
+                {
+                    b.HasOne("Shared.Models.Usuarios", null)
+                        .WithMany("Abogados")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Shared.Models.Audiencias", b =>
+                {
+                    b.HasOne("Shared.Models.Demandas", null)
+                        .WithMany("Audiencias")
+                        .HasForeignKey("DemandaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Shared.Models.Demandas", b =>
                 {
+                    b.HasOne("Shared.Models.Sentencias", null)
+                        .WithMany("Demandas")
+                        .HasForeignKey("SentenciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Shared.Models.Usuarios", null)
                         .WithMany("Demandas")
                         .HasForeignKey("UsuarioId")
@@ -295,6 +356,15 @@ namespace FinalProject.Migrations
                     b.HasOne("Shared.Models.Usuarios", null)
                         .WithMany("Expedientes")
                         .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Shared.Models.Jueces", b =>
+                {
+                    b.HasOne("Shared.Models.Sentencias", null)
+                        .WithMany("Jueces")
+                        .HasForeignKey("SentenciaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -319,11 +389,22 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("Shared.Models.Demandas", b =>
                 {
+                    b.Navigation("Audiencias");
+
                     b.Navigation("TiposDemandas");
+                });
+
+            modelBuilder.Entity("Shared.Models.Sentencias", b =>
+                {
+                    b.Navigation("Demandas");
+
+                    b.Navigation("Jueces");
                 });
 
             modelBuilder.Entity("Shared.Models.Usuarios", b =>
                 {
+                    b.Navigation("Abogados");
+
                     b.Navigation("Demandas");
 
                     b.Navigation("Expedientes");

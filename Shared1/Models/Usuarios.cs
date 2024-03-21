@@ -34,5 +34,7 @@ namespace Shared.Models
         public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
         [ForeignKey("UsuarioId")]
         public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
+        [ForeignKey("UsuarioId")]
+        public ICollection<Abogados> Abogados { get; set; } = new List<Abogados>();
     }
 }

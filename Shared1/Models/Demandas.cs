@@ -28,8 +28,8 @@ namespace Shared.Models
         //public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
         [ForeignKey("DemandaId")]
         public ICollection<TiposDemandas> TiposDemandas { get; set; } = new List<TiposDemandas>();
-        //[ForeignKey("DemandaId")]
-        //public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
+        [ForeignKey("DemandaId")]
+        public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
 
     }
 }

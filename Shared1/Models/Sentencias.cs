@@ -21,10 +21,10 @@ namespace Shared.Models
         //public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
         //[ForeignKey("SentenciaId")]
         //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
-        //[ForeignKey("SentenciaId")]
-        //public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
-        //[ForeignKey("SentenciaId")]
-        //public ICollection<Jueces> Jueces { get; set; } = new List<Jueces>(); //Deberian ser jueces o un solo juez???
+        [ForeignKey("SentenciaId")]
+        public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
+        [ForeignKey("SentenciaId")]
+        public ICollection<Jueces> Jueces { get; set; } = new List<Jueces>(); //Deberian ser jueces o un solo juez???
         //[ForeignKey("TipoResoluciones")]
         //public int ResolucionId { get; set; }
 

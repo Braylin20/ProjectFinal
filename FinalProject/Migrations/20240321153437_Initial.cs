@@ -19,26 +19,13 @@ namespace FinalProject.Migrations
                 {
                     AbogadoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ColegioAbogadoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Abogados", x => x.AbogadoId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Audiencias",
-                columns: table => new
-                {
-                    AudienciaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DemandaId = table.Column<int>(type: "int", nullable: false),
-                    FechaAudiencia = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Audiencias", x => x.AudienciaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,6 +80,26 @@ namespace FinalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Jueces",
+                columns: table => new
+                {
+                    JuezId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SentenciaId = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Jueces", x => x.JuezId);
+                    table.ForeignKey(
+                        name: "FK_Jueces_Sentencias_SentenciaId",
+                        column: x => x.SentenciaId,
+                        principalTable: "Sentencias",
+                        principalColumn: "SentenciaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Demandas",
                 columns: table => new
                 {
@@ -106,6 +113,12 @@ namespace FinalProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Demandas", x => x.DemandaId);
+                    table.ForeignKey(
+                        name: "FK_Demandas_Sentencias_SentenciaId",
+                        column: x => x.SentenciaId,
+                        principalTable: "Sentencias",
+                        principalColumn: "SentenciaId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Demandas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
@@ -160,15 +173,65 @@ namespace FinalProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Audiencias",
+                columns: table => new
+                {
+                    AudienciaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DemandaId = table.Column<int>(type: "int", nullable: false),
+                    FechaAudiencia = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Audiencias", x => x.AudienciaId);
+                    table.ForeignKey(
+                        name: "FK_Audiencias_Demandas_DemandaId",
+                        column: x => x.DemandaId,
+                        principalTable: "Demandas",
+                        principalColumn: "DemandaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TiposDemandas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DemandaId = table.Column<int>(type: "int", nullable: false),
+                    NombreDemanda = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TiposDemandas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TiposDemandas_Demandas_DemandaId",
+                        column: x => x.DemandaId,
+                        principalTable: "Demandas",
+                        principalColumn: "DemandaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Abogados",
-                columns: new[] { "AbogadoId", "ColegioAbogadoId", "Nombre" },
+                columns: new[] { "AbogadoId", "ColegioAbogadoId", "Nombre", "UsuarioId" },
                 values: new object[,]
                 {
-                    { 1, null, "Juan Perez" },
-                    { 2, null, "Elizabeth Mata" },
-                    { 3, null, "Palito De Coco" }
+                    { 1, null, "Juan Perez", 0 },
+                    { 2, null, "Elizabeth Mata", 0 },
+                    { 3, null, "Palito De Coco", 0 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Audiencias_DemandaId",
+                table: "Audiencias",
+                column: "DemandaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Demandas_SentenciaId",
+                table: "Demandas",
+                column: "SentenciaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Demandas_UsuarioId",
@@ -181,9 +244,19 @@ namespace FinalProject.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Jueces_SentenciaId",
+                table: "Jueces",
+                column: "SentenciaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Niños_UsuarioId",
                 table: "Niños",
                 column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TiposDemandas_DemandaId",
+                table: "TiposDemandas",
+                column: "DemandaId");
         }
 
         /// <inheritdoc />
@@ -196,16 +269,22 @@ namespace FinalProject.Migrations
                 name: "Audiencias");
 
             migrationBuilder.DropTable(
-                name: "Demandas");
-
-            migrationBuilder.DropTable(
                 name: "Empleados");
 
             migrationBuilder.DropTable(
                 name: "Expedientes");
 
             migrationBuilder.DropTable(
+                name: "Jueces");
+
+            migrationBuilder.DropTable(
                 name: "Niños");
+
+            migrationBuilder.DropTable(
+                name: "TiposDemandas");
+
+            migrationBuilder.DropTable(
+                name: "Demandas");
 
             migrationBuilder.DropTable(
                 name: "Sentencias");
