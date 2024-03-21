@@ -6,30 +6,30 @@ namespace FinalProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DemandasController :ControllerBase
+    public class DemandasController(DemandasServices demandasServices) :ControllerBase
     {
-        // GET: api/GetUsuarios
+        // GET: api/GetDemandas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuarios>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Demandas>>> GetUsuarios()
         {
-            var deps = await usuariosServices.GetUsuarios();
+            var deps = await demandasServices.GetDemandas();
             return Ok(deps);
         }
 
-        // GET: api/GetDepartments/5
+        // GET: api/GetDemandas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuarios>> GetUsuarios(short id)
+        public async Task<ActionResult<Demandas>> GetUsuarios(short id)
         {
-            return await usuariosServices.GetUsuario(id);
+            return await demandasServices.GetDemanda(id);
         }
 
-        // POST: api/GetUsuarios
+        // POST: api/GetDemandas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Usuarios>> SaveUsuarios(Usuarios usuario)
+        public async Task<ActionResult<Demandas>> SaveUsuarios(Demandas demandas)
         {
-            var usuarioSaved = await usuariosServices.Save(usuario);
-            return Ok(usuarioSaved);
+            var demandaSaved = await demandasServices.Save(demandas);
+            return Ok(demandaSaved);
         }
     }
 }

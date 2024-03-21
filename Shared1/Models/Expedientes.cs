@@ -13,12 +13,13 @@ namespace Shared.Models
     {
         [Key]
         public int ExpedienteId { get; set; }
-        public int SentenciaId { get; set; }
         public int UsuarioId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Comentario { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public DateTime FechaEntrada { get; set; }
+        [ForeignKey("SentenciaId")]
+        public ICollection<Sentencias> Sentencias { get; set; } = new List<Sentencias>();
         //[ForeignKey("Cedula")]
         //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
         //[ForeignKey("DemandaId")]

@@ -8,7 +8,7 @@ public class DemandasServices(Context _context)
 {
     public async Task<IEnumerable<Demandas>> GetDemandas()
     {
-        return await _context.Demandas
+        return await _context.Demandas.Include(d=>d.TiposDemandas).Include(d=>d.Audiencias)
             .AsNoTracking().ToListAsync();
     }
 
@@ -19,8 +19,8 @@ public class DemandasServices(Context _context)
 
     public async Task<Demandas> Save(Demandas demandas)
     {
-        _context.Demandas.Add(department);
+        _context.Demandas.Add(demandas);
         await _context.SaveChangesAsync();
-        return department;
+        return demandas;
     }
 }

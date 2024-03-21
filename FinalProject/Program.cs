@@ -30,6 +30,7 @@ builder.Services.AddScoped(c =>
 );
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<UsuariosServices>();
+builder.Services.AddScoped<DemandasServices>();
 
 var app = builder.Build();
 

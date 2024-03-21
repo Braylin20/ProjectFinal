@@ -12,6 +12,7 @@ namespace Shared.Models
     {
         [Key]
         public int SentenciaId { get; set; }
+        public int ExpedienteId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public DateTime FechaCreacion { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
