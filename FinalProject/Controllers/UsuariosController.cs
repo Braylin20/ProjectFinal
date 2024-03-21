@@ -16,7 +16,7 @@ namespace FinalProject.Controllers
             return Ok(deps);
         }
 
-        // GET: api/GetDepartments/5
+        // GET: api/GetUsuarios/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuarios>> GetUsuarios(short id)
         {
