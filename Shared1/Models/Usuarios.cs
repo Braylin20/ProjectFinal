@@ -13,7 +13,7 @@ namespace Shared.Models
         [Key]
         public int UsuarioId { get; set; }
         public int DemandaId { get; set; }
-        public int SentenciaId { get; set; }
+        //public int SentenciaId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public int Cedula { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]

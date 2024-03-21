@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240321153437_Initial")]
+    [Migration("20240321214830_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -44,27 +44,9 @@ namespace FinalProject.Migrations
 
                     b.HasKey("AbogadoId");
 
-                    b.ToTable("Abogados");
+                    b.HasIndex("UsuarioId");
 
-                    b.HasData(
-                        new
-                        {
-                            AbogadoId = 1,
-                            Nombre = "Juan Perez",
-                            UsuarioId = 0
-                        },
-                        new
-                        {
-                            AbogadoId = 2,
-                            Nombre = "Elizabeth Mata",
-                            UsuarioId = 0
-                        },
-                        new
-                        {
-                            AbogadoId = 3,
-                            Nombre = "Palito De Coco",
-                            UsuarioId = 0
-                        });
+                    b.ToTable("Abogados");
                 });
 
             modelBuilder.Entity("Shared.Models.Audiencias", b =>
@@ -161,9 +143,6 @@ namespace FinalProject.Migrations
                     b.Property<DateTime>("FechaEntrada")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SentenciaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
@@ -240,6 +219,9 @@ namespace FinalProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SentenciaId"));
 
+                    b.Property<int>("ExpedienteId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
@@ -314,6 +296,15 @@ namespace FinalProject.Migrations
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("Shared.Models.Abogados", b =>
+                {
+                    b.HasOne("Shared.Models.Usuarios", null)
+                        .WithMany("Abogados")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Shared.Models.Audiencias", b =>
@@ -392,6 +383,8 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("Shared.Models.Usuarios", b =>
                 {
+                    b.Navigation("Abogados");
+
                     b.Navigation("Demandas");
 
                     b.Navigation("Expedientes");

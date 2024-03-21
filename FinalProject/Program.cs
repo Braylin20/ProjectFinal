@@ -1,5 +1,6 @@
 using FinalProject.Client.Pages;
 using FinalProject.Components;
+using FinalProject.Controllers;
 using FinalProject.Dal;
 using FinalProject.Services;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ builder.Services.AddScoped(c =>
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<UsuariosServices>();
 builder.Services.AddScoped<DemandasServices>();
+builder.Services.AddScoped<EmpleadosServices>();
 
 var app = builder.Build();
 

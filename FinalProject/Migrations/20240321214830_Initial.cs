@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace FinalProject.Migrations
 {
     /// <inheritdoc />
@@ -13,21 +11,6 @@ namespace FinalProject.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Abogados",
-                columns: table => new
-                {
-                    AbogadoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ColegioAbogadoId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Abogados", x => x.AbogadoId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Empleados",
                 columns: table => new
@@ -50,6 +33,7 @@ namespace FinalProject.Migrations
                 {
                     SentenciaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ExpedienteId = table.Column<int>(type: "int", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NombreMinisterio = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -100,6 +84,27 @@ namespace FinalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Abogados",
+                columns: table => new
+                {
+                    AbogadoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ColegioAbogadoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Abogados", x => x.AbogadoId);
+                    table.ForeignKey(
+                        name: "FK_Abogados_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Demandas",
                 columns: table => new
                 {
@@ -133,7 +138,6 @@ namespace FinalProject.Migrations
                 {
                     ExpedienteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SentenciaId = table.Column<int>(type: "int", nullable: false),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
                     Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaEntrada = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -213,15 +217,10 @@ namespace FinalProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateIndex(
+                name: "IX_Abogados_UsuarioId",
                 table: "Abogados",
-                columns: new[] { "AbogadoId", "ColegioAbogadoId", "Nombre", "UsuarioId" },
-                values: new object[,]
-                {
-                    { 1, null, "Juan Perez", 0 },
-                    { 2, null, "Elizabeth Mata", 0 },
-                    { 3, null, "Palito De Coco", 0 }
-                });
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Audiencias_DemandaId",

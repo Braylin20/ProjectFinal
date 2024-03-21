@@ -18,8 +18,8 @@ namespace Shared.Models
         public string? Comentario { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public DateTime FechaEntrada { get; set; }
-        [ForeignKey("SentenciaId")]
-        public ICollection<Sentencias> Sentencias { get; set; } = new List<Sentencias>();
+        //[ForeignKey("ExpedienteId")]
+        //public ICollection<Sentencias> Sentencias { get; set; } = new List<Sentencias>();
         //[ForeignKey("Cedula")]
         //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
         //[ForeignKey("DemandaId")]

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240321153606_Abogados")]
-    partial class Abogados
+    [Migration("20240321215852_Hola")]
+    partial class Hola
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,9 +143,6 @@ namespace FinalProject.Migrations
                     b.Property<DateTime>("FechaEntrada")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SentenciaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
@@ -222,6 +219,9 @@ namespace FinalProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SentenciaId"));
 
+                    b.Property<int>("ExpedienteId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
@@ -286,9 +286,6 @@ namespace FinalProject.Migrations
                     b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SentenciaId")
-                        .HasColumnType("int");
 
                     b.Property<long>("Telefono")
                         .HasColumnType("bigint");
