@@ -15,16 +15,16 @@ namespace Shared.Models
         public DateTime Fecha { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Descripcion { get; set; }
-        [ForeignKey("EstadosDemandas")]
-        public int EstadoId { get; set; }
-        [ForeignKey("Cedula")]
-        public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
-        [ForeignKey("DemandadoId")]
-        public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
-        [ForeignKey("Id")]
-        public ICollection<TiposDemandas> TiposDemandas { get; set; } = new List<TiposDemandas>();
-        [ForeignKey("AudienciaId")]
-        public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
+        //[ForeignKey("EstadosDemandas")]
+        //public int EstadoId { get; set; }
+        //[ForeignKey("Cedula")]
+        //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
+        //[ForeignKey("DemandadoId")]
+        //public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
+        //[ForeignKey("Id")]
+        //public ICollection<TiposDemandas> TiposDemandas { get; set; } = new List<TiposDemandas>();
+        //[ForeignKey("AudienciaId")]
+        //public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
 
     }
 }

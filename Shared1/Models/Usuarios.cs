@@ -23,11 +23,12 @@ namespace Shared.Models
         public long Telefono { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Rol { get; set; }
-        [ForeignKey("NiñoId")]
+
+        [ForeignKey("UsuarioId")]
         public ICollection<Niños> Niños { get; set; } = new List<Niños>();
-        [ForeignKey("ExpedienteId")]
-        public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
-        [ForeignKey("DemandaId")]
-        public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
+        //[ForeignKey("ExpedienteId")]
+        //public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
+        //[ForeignKey("DemandaId")]
+        //public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
     }
 }

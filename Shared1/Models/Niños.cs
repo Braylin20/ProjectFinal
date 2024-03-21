@@ -10,7 +10,8 @@ namespace Shared.Models
     public class Niños
     {
         [Key]
-        public int NiñoId { get; set; }
+        public int NinoId { get; set; }
+        public int UsuarioId { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public int Nombre { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]

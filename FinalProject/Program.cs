@@ -1,5 +1,7 @@
 using FinalProject.Client.Pages;
 using FinalProject.Components;
+using FinalProject.Dal;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
+builder.Services.AddDbContext<Context>(op =>
+    op.UseSqlServer(ConStr)
+    );
+
 
 var app = builder.Build();
 
