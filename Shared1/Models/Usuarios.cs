@@ -11,7 +11,11 @@ namespace Shared.Models
     public class Usuarios
     {
         [Key]
-        public long Cedula { get; set; }
+        public int UsuarioId { get; set; }
+        public int DemandaId { get; set; }
+        public int SentenciaId { get; set; }
+        [Required(ErrorMessage = "Este campo es requerido")]
+        public int Cedula { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Nombre { get; set; }
         [EmailAddress(ErrorMessage = "Este campo es requerido")]
@@ -26,9 +30,9 @@ namespace Shared.Models
 
         [ForeignKey("UsuarioId")]
         public ICollection<Niños> Niños { get; set; } = new List<Niños>();
-        //[ForeignKey("ExpedienteId")]
-        //public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
-        //[ForeignKey("DemandaId")]
-        //public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
+        [ForeignKey("UsuarioId")]
+        public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
+        [ForeignKey("UsuarioId")]
+        public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
     }
 }

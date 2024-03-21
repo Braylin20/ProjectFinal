@@ -11,7 +11,6 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
-
 builder.Services.AddDbContext<Context>(op =>
     op.UseSqlServer(ConStr)
     );

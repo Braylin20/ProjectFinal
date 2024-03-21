@@ -11,6 +11,7 @@ namespace Shared.Models
     {
         [Key]
         public int Id { get; set; }
+        public int DemandaId { get; set; }
         public string? NombreDemanda { get; set; }
     }
 }

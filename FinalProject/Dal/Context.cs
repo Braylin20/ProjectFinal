@@ -13,6 +13,7 @@ namespace FinalProject.Dal
         public DbSet<Sentencias> Sentencias { get; set; }
         public DbSet<Audiencias> Audiencias { get; set; }
         public DbSet<Empleados> Empleados { get; set; }
+        public DbSet<TiposDemandas> TiposDemandas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

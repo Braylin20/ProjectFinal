@@ -11,6 +11,7 @@ namespace Shared.Models
     {
         [Key]
         public int JuezId { get; set; }
+        public int SentenciaId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Nombre { get; set; }
     }
