@@ -12,22 +12,17 @@ namespace Shared.Models
     {
         [Key]
         public int SentenciaId { get; set; }
-        public int ExpedienteId { get; set; }
+        public int ResolucionId { get; set; }
+        public int EmpleadoId { get; set; }
+        [ForeignKey("EmpleadoId")]
+        public Empleados? Empleado { get; set; }
+        [ForeignKey("ResolucionId")]
+        public TipoResoluciones? TipoResoluciones { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public DateTime FechaCreacion { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? NombreMinisterio { get; set; }
-        //[Required(ErrorMessage = "Este campo es obligatorio")]
-        //[ForeignKey("SentenciaId")]
-        //public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
-        //[ForeignKey("SentenciaId")]
-        //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
-        [ForeignKey("SentenciaId")]
-        public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
-        [ForeignKey("SentenciaId")]
-        public ICollection<Jueces> Jueces { get; set; } = new List<Jueces>(); //Deberian ser jueces o un solo juez???
-        //[ForeignKey("TipoResoluciones")]
-        //public int ResolucionId { get; set; }
+        
 
     }
 }

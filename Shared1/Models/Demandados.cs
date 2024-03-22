@@ -11,6 +11,7 @@ namespace Shared.Models
     {
         [Key]
         public int DemandadoId { get; set; }
+
         public int DemandaId { get; set; }
         public string? Cedula { get; set; }
         public string? nombre { get; set; }

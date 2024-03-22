@@ -15,8 +15,6 @@ namespace Shared.Models
         public int DemandaId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public DateTime FechaAudiencia { get; set; }
-        //[ForeignKey("AlguacilId")]
-        //public ICollection<Alguaciles> Alguaciles { get; set; } = new List<Alguaciles>();
 
     }
 }

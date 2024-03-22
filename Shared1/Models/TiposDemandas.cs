@@ -10,8 +10,7 @@ namespace Shared.Models
     public class TiposDemandas
     {
         [Key]
-        public int Id { get; set; }
-        public int DemandaId { get; set; }
-        public string? NombreDemanda { get; set; }
+        public int TiposDemandasId { get; set; }
+        public string? TipoDemanda { get; set; }
     }
 }

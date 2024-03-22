@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinalProject.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class n : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,18 +28,42 @@ namespace FinalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sentencias",
+                name: "EstadosDemandas",
                 columns: table => new
                 {
-                    SentenciaId = table.Column<int>(type: "int", nullable: false)
+                    EstadoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ExpedienteId = table.Column<int>(type: "int", nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NombreMinisterio = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sentencias", x => x.SentenciaId);
+                    table.PrimaryKey("PK_EstadosDemandas", x => x.EstadoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoResoluciones",
+                columns: table => new
+                {
+                    ResolucionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoResolcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoResoluciones", x => x.ResolucionId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TiposDemandas",
+                columns: table => new
+                {
+                    TiposDemandasId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoDemanda = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TiposDemandas", x => x.TiposDemandasId);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,8 +72,6 @@ namespace FinalProject.Migrations
                 {
                     UsuarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DemandaId = table.Column<int>(type: "int", nullable: false),
-                    SentenciaId = table.Column<int>(type: "int", nullable: false),
                     Cedula = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -64,22 +86,58 @@ namespace FinalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Jueces",
+                name: "Sentencias",
                 columns: table => new
                 {
-                    JuezId = table.Column<int>(type: "int", nullable: false)
+                    SentenciaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SentenciaId = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ResolucionId = table.Column<int>(type: "int", nullable: false),
+                    EmpleadoId = table.Column<int>(type: "int", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NombreMinisterio = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Jueces", x => x.JuezId);
+                    table.PrimaryKey("PK_Sentencias", x => x.SentenciaId);
                     table.ForeignKey(
-                        name: "FK_Jueces_Sentencias_SentenciaId",
-                        column: x => x.SentenciaId,
-                        principalTable: "Sentencias",
-                        principalColumn: "SentenciaId",
+                        name: "FK_Sentencias_Empleados_EmpleadoId",
+                        column: x => x.EmpleadoId,
+                        principalTable: "Empleados",
+                        principalColumn: "EmpleadoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Sentencias_TipoResoluciones_ResolucionId",
+                        column: x => x.ResolucionId,
+                        principalTable: "TipoResoluciones",
+                        principalColumn: "ResolucionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Demandas",
+                columns: table => new
+                {
+                    DemandaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TiposDemandasId = table.Column<int>(type: "int", nullable: false),
+                    EstadoId = table.Column<int>(type: "int", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Demandas", x => x.DemandaId);
+                    table.ForeignKey(
+                        name: "FK_Demandas_EstadosDemandas_EstadoId",
+                        column: x => x.EstadoId,
+                        principalTable: "EstadosDemandas",
+                        principalColumn: "EstadoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Demandas_TiposDemandas_TiposDemandasId",
+                        column: x => x.TiposDemandasId,
+                        principalTable: "TiposDemandas",
+                        principalColumn: "TiposDemandasId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -105,41 +163,12 @@ namespace FinalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Demandas",
-                columns: table => new
-                {
-                    DemandaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SentenciaId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Demandas", x => x.DemandaId);
-                    table.ForeignKey(
-                        name: "FK_Demandas_Sentencias_SentenciaId",
-                        column: x => x.SentenciaId,
-                        principalTable: "Sentencias",
-                        principalColumn: "SentenciaId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Demandas_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Expedientes",
                 columns: table => new
                 {
                     ExpedienteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaEntrada = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -160,10 +189,8 @@ namespace FinalProject.Migrations
                     NinoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    Nombre = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NombrePadre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NombreMadre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -198,22 +225,58 @@ namespace FinalProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TiposDemandas",
+                name: "Demandados",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    DemandadoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DemandaId = table.Column<int>(type: "int", nullable: false),
-                    NombreDemanda = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Cedula = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TiposDemandas", x => x.Id);
+                    table.PrimaryKey("PK_Demandados", x => x.DemandadoId);
                     table.ForeignKey(
-                        name: "FK_TiposDemandas_Demandas_DemandaId",
+                        name: "FK_Demandados_Demandas_DemandaId",
                         column: x => x.DemandaId,
                         principalTable: "Demandas",
                         principalColumn: "DemandaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExpedientesDetalles",
+                columns: table => new
+                {
+                    DetalleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExpedienteId = table.Column<int>(type: "int", nullable: false),
+                    SentenciaId = table.Column<int>(type: "int", nullable: false),
+                    DemandaId = table.Column<int>(type: "int", nullable: false),
+                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpedientesDetalles", x => x.DetalleId);
+                    table.ForeignKey(
+                        name: "FK_ExpedientesDetalles_Demandas_DemandaId",
+                        column: x => x.DemandaId,
+                        principalTable: "Demandas",
+                        principalColumn: "DemandaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExpedientesDetalles_Expedientes_ExpedienteId",
+                        column: x => x.ExpedienteId,
+                        principalTable: "Expedientes",
+                        principalColumn: "ExpedienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExpedientesDetalles_Sentencias_SentenciaId",
+                        column: x => x.SentenciaId,
+                        principalTable: "Sentencias",
+                        principalColumn: "SentenciaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -228,14 +291,19 @@ namespace FinalProject.Migrations
                 column: "DemandaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Demandas_SentenciaId",
-                table: "Demandas",
-                column: "SentenciaId");
+                name: "IX_Demandados_DemandaId",
+                table: "Demandados",
+                column: "DemandaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Demandas_UsuarioId",
+                name: "IX_Demandas_EstadoId",
                 table: "Demandas",
-                column: "UsuarioId");
+                column: "EstadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Demandas_TiposDemandasId",
+                table: "Demandas",
+                column: "TiposDemandasId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expedientes_UsuarioId",
@@ -243,8 +311,18 @@ namespace FinalProject.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jueces_SentenciaId",
-                table: "Jueces",
+                name: "IX_ExpedientesDetalles_DemandaId",
+                table: "ExpedientesDetalles",
+                column: "DemandaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpedientesDetalles_ExpedienteId",
+                table: "ExpedientesDetalles",
+                column: "ExpedienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpedientesDetalles_SentenciaId",
+                table: "ExpedientesDetalles",
                 column: "SentenciaId");
 
             migrationBuilder.CreateIndex(
@@ -253,9 +331,14 @@ namespace FinalProject.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TiposDemandas_DemandaId",
-                table: "TiposDemandas",
-                column: "DemandaId");
+                name: "IX_Sentencias_EmpleadoId",
+                table: "Sentencias",
+                column: "EmpleadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sentencias_ResolucionId",
+                table: "Sentencias",
+                column: "ResolucionId");
         }
 
         /// <inheritdoc />
@@ -268,28 +351,37 @@ namespace FinalProject.Migrations
                 name: "Audiencias");
 
             migrationBuilder.DropTable(
-                name: "Empleados");
+                name: "Demandados");
 
             migrationBuilder.DropTable(
-                name: "Expedientes");
-
-            migrationBuilder.DropTable(
-                name: "Jueces");
+                name: "ExpedientesDetalles");
 
             migrationBuilder.DropTable(
                 name: "Niños");
 
             migrationBuilder.DropTable(
-                name: "TiposDemandas");
+                name: "Demandas");
 
             migrationBuilder.DropTable(
-                name: "Demandas");
+                name: "Expedientes");
 
             migrationBuilder.DropTable(
                 name: "Sentencias");
 
             migrationBuilder.DropTable(
+                name: "EstadosDemandas");
+
+            migrationBuilder.DropTable(
+                name: "TiposDemandas");
+
+            migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Empleados");
+
+            migrationBuilder.DropTable(
+                name: "TipoResoluciones");
         }
     }
 }

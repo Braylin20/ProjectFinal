@@ -13,13 +13,9 @@ namespace Shared.Models
         public int NinoId { get; set; }
         public int UsuarioId { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
-        public int Nombre { get; set; }
+        public string? Nombre { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public DateTime FechaNacimiento { get; set; }
-        [Required(ErrorMessage = "Este campo es obligatorio")]
-        public string? NombrePadre { get; set; }
-        [Required(ErrorMessage = "Este campo es obligatorio")]
-        public string? NombreMadre { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public string? Genero { get; set; }
     }

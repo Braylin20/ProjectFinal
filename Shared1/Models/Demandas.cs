@@ -12,24 +12,19 @@ namespace Shared.Models
     {
         [Key]
         public int DemandaId { get; set; }
-        public int SentenciaId { get; set; }
-        public int UsuarioId { get; set; }
+        public int TiposDemandasId { get; set; }
+        public int EstadoId { get; set; }
         public DateTime Fecha { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Descripcion { get; set; }
-        //[ForeignKey("EstadosDemandas")]
-        //public int EstadoId { get; set; }
-
-
-        //[ForeignKey("DemandaId")] //No puede haber una llave a Usuario ya que hay una llave de Usuario a demanda y no es necesario
-        //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
-
-        //[ForeignKey("DemandaId")]
-        //public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
+        [ForeignKey("EstadoId")]
+        public EstadosDemandas? EstadoDemanda { get; set; }
+        [ForeignKey("TiposDemandasId")]
+        public TiposDemandas? TipoDemanda { get; set; }
         [ForeignKey("DemandaId")]
-        public ICollection<TiposDemandas> TiposDemandas { get; set; } = new List<TiposDemandas>();
+        public ICollection<Audiencias> Niños { get; set; } = new List<Audiencias>();
         [ForeignKey("DemandaId")]
-        public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
+        public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
 
     }
 }

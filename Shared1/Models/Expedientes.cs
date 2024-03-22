@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared1.Detalles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,15 +15,13 @@ namespace Shared.Models
         [Key]
         public int ExpedienteId { get; set; }
         public int UsuarioId { get; set; }
-        [Required(ErrorMessage = "Este campo es requerido")]
-        public string? Comentario { get; set; }
+        
+        
         [Required(ErrorMessage = "Este campo es requerido")]
         public DateTime FechaEntrada { get; set; }
-        //[ForeignKey("ExpedienteId")]
-        //public ICollection<Sentencias> Sentencias { get; set; } = new List<Sentencias>();
-        //[ForeignKey("Cedula")]
-        //public ICollection<Usuarios> Usuarios { get; set; } = new List<Usuarios>();
-        //[ForeignKey("DemandaId")]
-        //public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
+
+        [ForeignKey("ExpedienteId")]
+        public ICollection<ExpedientesDetalles> ExpedientesDetalles { get; set; } = new List<ExpedientesDetalles>();
+
     }
 }

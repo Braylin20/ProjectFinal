@@ -9,13 +9,20 @@ namespace FinalProject.Services
     {
         public async Task<IEnumerable<Usuarios>> GetUsuarios()
         {
-            return await _context.Usuarios.Include(u =>u.Expedientes).
-                Include(u=>u.Demandas)
-                .ThenInclude(d=>d.TiposDemandas).
-                Include(u => u.Demandas)
-                .ThenInclude(d=>d.Audiencias).
-                Include(u=>u.Niños).
-                Include(u=>u.Abogados).AsNoTracking().ToListAsync();
+            return await _context.Usuarios.
+                Include(u=>u.Abogados).
+                Include(u=>u.Expedientes)
+                .ThenInclude(e=>e.ExpedientesDetalles).ThenInclude(e=>e.Demandas).ThenInclude(d=>d.EstadoDemanda).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles).ThenInclude(e => e.Demandas).ThenInclude(d => d.TipoDemanda).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles).ThenInclude(e => e.Demandas).ThenInclude(d => d.Demandados).
+                Include(u => u.Expedientes)
+                .ThenInclude(e=>e.ExpedientesDetalles)
+                .ThenInclude(e=>e.Sentencia).
+                Include(u=>u.Niños)
+
+                .AsNoTracking().ToListAsync();
         }
 
         public async Task<Usuarios?> GetUsuario(short id)

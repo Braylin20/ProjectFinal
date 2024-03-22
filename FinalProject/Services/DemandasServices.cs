@@ -6,11 +6,11 @@ namespace FinalProject.Services;
 
 public class DemandasServices(Context _context)
 {
-    public async Task<IEnumerable<Demandas>> GetDemandas()
-    {
-        return await _context.Demandas.Include(d=>d.TiposDemandas).Include(d=>d.Audiencias)
-            .AsNoTracking().ToListAsync();
-    }
+    //public async Task<IEnumerable<Demandas>> GetDemandas()
+    //{
+    //    return await _context.Demandas.Include(d=>d.TiposDemandas).Include(d=>d.Audiencias)
+    //        .AsNoTracking().ToListAsync();
+    //}
 
     public async Task<Demandas?> GetDemanda(short id)
     {

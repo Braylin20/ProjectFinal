@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared1.Detalles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,8 +13,6 @@ namespace Shared.Models
     {
         [Key]
         public int UsuarioId { get; set; }
-        public int DemandaId { get; set; }
-        //public int SentenciaId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public int Cedula { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
@@ -27,13 +26,10 @@ namespace Shared.Models
         public long Telefono { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Rol { get; set; }
-
-        [ForeignKey("UsuarioId")]
-        public ICollection<Niños> Niños { get; set; } = new List<Niños>();
         [ForeignKey("UsuarioId")]
         public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
         [ForeignKey("UsuarioId")]
-        public ICollection<Demandas> Demandas { get; set; } = new List<Demandas>();
+        public ICollection<Niños> Niños { get; set; } = new List<Niños>();
         [ForeignKey("UsuarioId")]
         public ICollection<Abogados> Abogados { get; set; } = new List<Abogados>();
     }
