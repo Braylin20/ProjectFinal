@@ -30,13 +30,16 @@ builder.Services.AddScoped(c =>
     }
 );
 builder.Services.AddHttpClient();
+//Services Api
 builder.Services.AddScoped<UsuariosServices>();
 builder.Services.AddScoped<DemandasServices>();
 builder.Services.AddScoped<EmpleadosServices>();
 builder.Services.AddScoped<SentenciasServices>();
 builder.Services.AddScoped<ExpedientesServices>();
 builder.Services.AddScoped<AudienciasServices>();
+builder.Services.AddScoped<EmpleadoSentenciaServices>();
 
+//Servies Client
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

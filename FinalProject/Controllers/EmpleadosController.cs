@@ -8,7 +8,7 @@ namespace FinalProject.Controllers
     [ApiController]
     public class EmpleadosController(EmpleadosServices empleadosServices) : ControllerBase
     {
-        // GET: api/GetUsuarios
+        // GET: api/GetEmpleados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Empleados>>> GetUsuarios()
         {
@@ -16,14 +16,14 @@ namespace FinalProject.Controllers
             return Ok(deps);
         }
 
-        // GET: api/GetDepartments/5
+        // GET: api/GetEmpleados/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Empleados>> GetEmpleados(short id)
         {
             return await empleadosServices.GetEmpleado(id);
         }
 
-        // POST: api/GetUsuarios
+        // POST: api/GetEmpleados
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Empleados>> SaveUsuarios(Empleados empleados)
