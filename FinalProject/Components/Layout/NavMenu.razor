@@ -14,21 +14,16 @@
 
                             <Dropdown>
                                 <DropdownToggleButton Color="ButtonColor.Secondary">Home</DropdownToggleButton>
-                                <DropdownMenu>
-                                    <DropdownItem To="/CreateAudiencia" Type="ButtonType.Link">Demandas</DropdownItem>
-                                    <DropdownItem To="#" Type="ButtonType.Link">Audiencias</DropdownItem>
-                                   
+                                <DropdownMenu @class="custom-dropdown" Style="background-color:#012E40;padding;0px">
+                                    <DropdownItem To="/CreateAudiencia" Type="ButtonType.Link" Style="color:white;">Audiencias</DropdownItem>
+                                    <DropdownItem To="#" Type="ButtonType.Link" Style="color:white;padding;0px">Demandas</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
 
 
-                            @* <a class="nav-link mx-lg-2 active text-white dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home</a>
-                            <ul class="nav-link dropdown-toggle" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul> *@
+
+
+                           
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2 text-white" href="/weather">Counter</a>
