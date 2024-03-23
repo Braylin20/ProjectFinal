@@ -4,6 +4,7 @@ using FinalProject.Controllers;
 using FinalProject.Dal;
 using FinalProject.Services;
 using Microsoft.EntityFrameworkCore;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped(c =>
     }
 );
 builder.Services.AddHttpClient();
+builder.Services.AddRadzenComponents();
 //Services Api
 builder.Services.AddScoped<UsuariosServices>();
 builder.Services.AddScoped<DemandasServices>();
@@ -39,7 +41,11 @@ builder.Services.AddScoped<ExpedientesServices>();
 builder.Services.AddScoped<AudienciasServices>();
 builder.Services.AddScoped<EmpleadoSentenciaServices>();
 
+
+
 //Servies Client
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

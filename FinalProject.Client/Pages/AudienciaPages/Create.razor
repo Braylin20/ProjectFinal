@@ -1,5 +1,25 @@
 ﻿@page "/CreateAudiencia"
 
+@inject NotificationService notificationService
+@inject HttpClient httpClient
+@rendermode InteractiveServer
+<RadzenNotification/>
+
+<button @onclick="Guardar">Notificiacion</button>
+
 @code {
-    
+    public Audiencias Audiencia { get; set; } = new Audiencias();
+
+
+    public void Guardar()
+    {
+        var mensaje = new NotificationMessage
+        {
+            Severity = NotificationSeverity.Success,
+            Summary = "Notificacion",
+            Detail = "Esto es una notificacion",
+            Duration = 4_000
+        };
+        notificationService.Notify(mensaje);
+    }
 }
