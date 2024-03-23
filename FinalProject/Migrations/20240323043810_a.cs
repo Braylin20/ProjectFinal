@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinalProject.Migrations
 {
     /// <inheritdoc />
-    public partial class n : Migration
+    public partial class a : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,19 +92,12 @@ namespace FinalProject.Migrations
                     SentenciaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ResolucionId = table.Column<int>(type: "int", nullable: false),
-                    EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NombreMinisterio = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sentencias", x => x.SentenciaId);
-                    table.ForeignKey(
-                        name: "FK_Sentencias_Empleados_EmpleadoId",
-                        column: x => x.EmpleadoId,
-                        principalTable: "Empleados",
-                        principalColumn: "EmpleadoId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Sentencias_TipoResoluciones_ResolucionId",
                         column: x => x.ResolucionId,
@@ -201,6 +194,32 @@ namespace FinalProject.Migrations
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmpleadoSentencia",
+                columns: table => new
+                {
+                    EmpleadoSentenciaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SentenciaId = table.Column<int>(type: "int", nullable: false),
+                    EmpleadoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmpleadoSentencia", x => x.EmpleadoSentenciaId);
+                    table.ForeignKey(
+                        name: "FK_EmpleadoSentencia_Empleados_EmpleadoId",
+                        column: x => x.EmpleadoId,
+                        principalTable: "Empleados",
+                        principalColumn: "EmpleadoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmpleadoSentencia_Sentencias_SentenciaId",
+                        column: x => x.SentenciaId,
+                        principalTable: "Sentencias",
+                        principalColumn: "SentenciaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -306,6 +325,16 @@ namespace FinalProject.Migrations
                 column: "TiposDemandasId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmpleadoSentencia_EmpleadoId",
+                table: "EmpleadoSentencia",
+                column: "EmpleadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmpleadoSentencia_SentenciaId",
+                table: "EmpleadoSentencia",
+                column: "SentenciaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Expedientes_UsuarioId",
                 table: "Expedientes",
                 column: "UsuarioId");
@@ -331,11 +360,6 @@ namespace FinalProject.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sentencias_EmpleadoId",
-                table: "Sentencias",
-                column: "EmpleadoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Sentencias_ResolucionId",
                 table: "Sentencias",
                 column: "ResolucionId");
@@ -354,10 +378,16 @@ namespace FinalProject.Migrations
                 name: "Demandados");
 
             migrationBuilder.DropTable(
+                name: "EmpleadoSentencia");
+
+            migrationBuilder.DropTable(
                 name: "ExpedientesDetalles");
 
             migrationBuilder.DropTable(
                 name: "Niños");
+
+            migrationBuilder.DropTable(
+                name: "Empleados");
 
             migrationBuilder.DropTable(
                 name: "Demandas");
@@ -376,9 +406,6 @@ namespace FinalProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
-
-            migrationBuilder.DropTable(
-                name: "Empleados");
 
             migrationBuilder.DropTable(
                 name: "TipoResoluciones");

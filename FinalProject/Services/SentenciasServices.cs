@@ -8,9 +8,11 @@ namespace FinalProject.Services
     {
         public async Task<IEnumerable<Sentencias>> GetSentencias()
         {
-            return await _context.Sentencias.AsNoTracking().ToListAsync();
+            return await _context.Sentencias.
+                Include(s=>s.TipoResoluciones).
+                AsNoTracking().
+                ToListAsync();
         }
-
         public async Task<Sentencias?> GetSentencia(short id)
         {
             return await _context.Sentencias.FindAsync(id);

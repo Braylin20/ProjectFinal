@@ -22,7 +22,7 @@ namespace Shared.Models
         [ForeignKey("TiposDemandasId")]
         public TiposDemandas? TipoDemanda { get; set; }
         [ForeignKey("DemandaId")]
-        public ICollection<Audiencias> Niños { get; set; } = new List<Audiencias>();
+        public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
         [ForeignKey("DemandaId")]
         public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
 

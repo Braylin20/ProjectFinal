@@ -33,6 +33,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<UsuariosServices>();
 builder.Services.AddScoped<DemandasServices>();
 builder.Services.AddScoped<EmpleadosServices>();
+builder.Services.AddScoped<SentenciasServices>();
+builder.Services.AddScoped<ExpedientesServices>();
+builder.Services.AddScoped<AudienciasServices>();
 
 var app = builder.Build();
 

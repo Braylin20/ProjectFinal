@@ -13,9 +13,6 @@ namespace Shared.Models
         [Key]
         public int SentenciaId { get; set; }
         public int ResolucionId { get; set; }
-        public int EmpleadoId { get; set; }
-        [ForeignKey("EmpleadoId")]
-        public Empleados? Empleado { get; set; }
         [ForeignKey("ResolucionId")]
         public TipoResoluciones? TipoResoluciones { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]

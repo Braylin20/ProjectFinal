@@ -12,22 +12,52 @@ namespace FinalProject.Services
             return await _context.Usuarios.
                 Include(u=>u.Abogados).
                 Include(u=>u.Expedientes)
-                .ThenInclude(e=>e.ExpedientesDetalles).ThenInclude(e=>e.Demandas).ThenInclude(d=>d.EstadoDemanda).
+                .ThenInclude(e=>e.ExpedientesDetalles)
+                .ThenInclude(e=>e.Demandas)
+                .ThenInclude(d=>d!.EstadoDemanda).
                 Include(u => u.Expedientes)
-                .ThenInclude(e => e.ExpedientesDetalles).ThenInclude(e => e.Demandas).ThenInclude(d => d.TipoDemanda).
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Demandas)
+                .ThenInclude(d => d!.TipoDemanda).
                 Include(u => u.Expedientes)
-                .ThenInclude(e => e.ExpedientesDetalles).ThenInclude(e => e.Demandas).ThenInclude(d => d.Demandados).
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Demandas)
+                .ThenInclude(d => d!.Demandados).
                 Include(u => u.Expedientes)
                 .ThenInclude(e=>e.ExpedientesDetalles)
                 .ThenInclude(e=>e.Sentencia).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Sentencia)
+                .ThenInclude(s => s!.TipoResoluciones).
                 Include(u=>u.Niños)
-
                 .AsNoTracking().ToListAsync();
         }
 
         public async Task<Usuarios?> GetUsuario(short id)
         {
-            return await _context.Usuarios.FindAsync(id);
+            return await _context.Usuarios.Include(u => u.Abogados).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Demandas)
+                .ThenInclude(d => d!.EstadoDemanda).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Demandas)
+                .ThenInclude(d => d!.TipoDemanda).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Demandas)
+                .ThenInclude(d => d!.Demandados).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Sentencia).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Sentencia)
+                .ThenInclude(s => s!.TipoResoluciones).
+                Include(u => u.Niños)
+                .SingleOrDefaultAsync(u => u.UsuarioId == id);
         }
 
         public async Task<Usuarios> Save(Usuarios usuarios)

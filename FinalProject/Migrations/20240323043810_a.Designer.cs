@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240322023033_n")]
-    partial class n
+    [Migration("20240323043810_a")]
+    partial class a
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,9 +226,6 @@ namespace FinalProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SentenciaId"));
 
-                    b.Property<int>("EmpleadoId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
@@ -240,8 +237,6 @@ namespace FinalProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("SentenciaId");
-
-                    b.HasIndex("EmpleadoId");
 
                     b.HasIndex("ResolucionId");
 
@@ -352,6 +347,29 @@ namespace FinalProject.Migrations
                     b.ToTable("ExpedientesDetalles");
                 });
 
+            modelBuilder.Entity("Shared1.Models.EmpleadoSentencia", b =>
+                {
+                    b.Property<int>("EmpleadoSentenciaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpleadoSentenciaId"));
+
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SentenciaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmpleadoSentenciaId");
+
+                    b.HasIndex("EmpleadoId");
+
+                    b.HasIndex("SentenciaId");
+
+                    b.ToTable("EmpleadoSentencia");
+                });
+
             modelBuilder.Entity("Shared.Models.Abogados", b =>
                 {
                     b.HasOne("Shared.Models.Usuarios", null)
@@ -364,7 +382,7 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("Shared.Models.Audiencias", b =>
                 {
                     b.HasOne("Shared.Models.Demandas", null)
-                        .WithMany("Niños")
+                        .WithMany("Audiencias")
                         .HasForeignKey("DemandaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -418,19 +436,11 @@ namespace FinalProject.Migrations
 
             modelBuilder.Entity("Shared.Models.Sentencias", b =>
                 {
-                    b.HasOne("Shared.Models.Empleados", "Empleado")
-                        .WithMany()
-                        .HasForeignKey("EmpleadoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Shared.Models.TipoResoluciones", "TipoResoluciones")
                         .WithMany()
                         .HasForeignKey("ResolucionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Empleado");
 
                     b.Navigation("TipoResoluciones");
                 });
@@ -460,11 +470,30 @@ namespace FinalProject.Migrations
                     b.Navigation("Sentencia");
                 });
 
+            modelBuilder.Entity("Shared1.Models.EmpleadoSentencia", b =>
+                {
+                    b.HasOne("Shared.Models.Empleados", "Empleado")
+                        .WithMany()
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shared.Models.Sentencias", "Sentencia")
+                        .WithMany()
+                        .HasForeignKey("SentenciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empleado");
+
+                    b.Navigation("Sentencia");
+                });
+
             modelBuilder.Entity("Shared.Models.Demandas", b =>
                 {
-                    b.Navigation("Demandados");
+                    b.Navigation("Audiencias");
 
-                    b.Navigation("Niños");
+                    b.Navigation("Demandados");
                 });
 
             modelBuilder.Entity("Shared.Models.Expedientes", b =>

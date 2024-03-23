@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Models;
+using Shared1.Models;
 
 namespace FinalProject.Dal
 {
@@ -19,6 +20,7 @@ namespace FinalProject.Dal
         public DbSet<Demandados> Demandados { get; set; }
         public DbSet<Niños> Niños { get; set; }
         public DbSet<EstadosDemandas> EstadosDemandas { get; set; }
+        public DbSet<EmpleadoSentencia> EmpleadoSentencia { get; set; }
 
 
 
@@ -27,11 +29,24 @@ namespace FinalProject.Dal
         //    base.OnModelCreating(modelBuilder);
         //    modelBuilder.Entity<Abogados>().HasData(new List<Abogados>()
         //{
-        //    new Abogados (){ AbogadoId=1,Nombre="Juan Perez",ColegioAbogadoId=234, UsuarioId=0 },
-        //    new Abogados (){ AbogadoId=2,Nombre="Elizabeth Mata" ,ColegioAbogadoId=233, UsuarioId=0},
-        //    new Abogados (){ AbogadoId=3,Nombre="Palito De Coco",ColegioAbogadoId=231, UsuarioId=0 }
+        //    new Abogados (){ AbogadoId=1,Nombre="Juan Perez",ColegioAbogadoId=234, UsuarioId=1 },
         //});
+
+        //    modelBuilder.Entity<TipoResoluciones>().HasData(new List<TipoResoluciones>()
+        //{
+        //    new TipoResoluciones (){ TipoResolcion ="Hola",ResolucionId=1 },
+        //});
+        //    modelBuilder.Entity<EstadosDemandas>().HasData(new List<EstadosDemandas>()
+        //{
+        //    new EstadosDemandas (){ Estado ="Hola",EstadoId=1 },
+        //});
+        //    modelBuilder.Entity<Usuarios>().HasData(new List<Usuarios>()
+        //{
+        //    new Usuarios (){ UsuarioId =1,Nombre="Jose",FechaCreacion=DateTime.Now,Correo="",Clave="2929",Rol="Hola",Telefono=33832, Expedientes  },
+        //});
+
         //}
+        
 
     }
 }
