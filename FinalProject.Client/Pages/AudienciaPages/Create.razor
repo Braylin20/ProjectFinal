@@ -1,25 +1,88 @@
 ﻿@page "/CreateAudiencia"
-
+@rendermode InteractiveAuto
 @inject NotificationService notificationService
 @inject HttpClient httpClient
-@rendermode InteractiveServer
+@inject DemandaServices demandaServices
+@inject AudienciaServices audienciaServices
 <RadzenNotification/>
 
-<button @onclick="Guardar">Notificiacion</button>
+<EditForm Model="Audiencia" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+
+    
+    <div class="container-fluid">
+        <div class="card shadow-lg w-50 mx-auto">
+            <div class="card-header">
+                <h3>Registro Audiencia</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <InputDate @bind-Value="Audiencia.FechaAudiencia" class="form-control" />
+                        <ValidationMessage For="@(()=>Audiencia.FechaAudiencia)" />
+                    </div>
+                    <div class="col-6">
+                        <InputSelect @bind-Value="Audiencia.DemandaId" class="form-control">
+                            <option value="">Seleccione un tipo de demanda</option>
+                            @foreach (var demanda in ListaDemandas)
+                            {
+                                <option value="@demanda.DemandaId">@demanda.TipoDemanda</option>
+                            }
+                            
+                        </InputSelect>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <InputText @bind-Value="Audiencia.Comentario" class="form-control" />
+                        <ValidationMessage For="@(()=>Audiencia.Comentario)" />
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card-footer">
+               <div class="btn-group">
+                   <button type="submit" class="btn btn-success">Guardar</button>
+               </div>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
 
 @code {
     public Audiencias Audiencia { get; set; } = new Audiencias();
+    private IEnumerable<Demandas> ListaDemandas { get; set; } = new List<Demandas>();
 
-
+    protected override async Task OnInitializedAsync()
+    {
+        ListaDemandas = await demandaServices.GetDemandas();
+    }
     public void Guardar()
     {
-        var mensaje = new NotificationMessage
+        var guardado = audienciaServices.Save(Audiencia);
+        if(guardado is null)
+    {
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Error,
+                    Summary = "Error",
+                    Detail = "No se ha guardado correctamente",
+                    Duration = 4_000
+                };
+            notificationService.Notify(mensaje);
+        }
+        else
         {
-            Severity = NotificationSeverity.Success,
-            Summary = "Notificacion",
-            Detail = "Esto es una notificacion",
-            Duration = 4_000
-        };
-        notificationService.Notify(mensaje);
+            var mensaje = new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "Éxito",
+                    Detail = "Se ha guardado correctamente",
+                    Duration = 4_000
+                };
+            notificationService.Notify(mensaje);
+        }
+        
     }
 }

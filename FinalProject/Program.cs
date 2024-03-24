@@ -1,4 +1,5 @@
 using FinalProject.Client.Pages;
+using FinalProject.Client.Services;
 using FinalProject.Components;
 using FinalProject.Controllers;
 using FinalProject.Dal;
@@ -44,7 +45,9 @@ builder.Services.AddScoped<EmpleadoSentenciaServices>();
 
 
 //Servies Client
-
+//builder.Services.AddScoped<AudienciasServicesDto>();
+builder.Services.AddScoped<DemandaServices>();
+builder.Services.AddScoped<AudienciaServices>();
 
 var app = builder.Build();
 

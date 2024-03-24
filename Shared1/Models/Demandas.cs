@@ -26,5 +26,6 @@ namespace Shared.Models
         [ForeignKey("DemandaId")]
         public ICollection<Demandados> Demandados { get; set; } = new List<Demandados>();
 
+        
     }
 }

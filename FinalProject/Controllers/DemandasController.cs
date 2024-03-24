@@ -10,11 +10,11 @@ namespace FinalProject.Controllers
     {
         // GET: api/GetDemandas
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable<Demandas>>> GetUsuarios()
-        //{
-        //    var deps = await demandasServices.GetDemandas();
-        //    return Ok(deps);
-        //}
+        public async Task<ActionResult<IEnumerable<Demandas>>> GetUsuarios()
+        {
+            var deps = await demandasServices.GetDemandas();
+            return Ok(deps);
+        }
 
         // GET: api/GetDemandas/5
         [HttpGet("{id}")]

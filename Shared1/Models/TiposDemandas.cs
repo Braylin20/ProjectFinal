@@ -12,5 +12,10 @@ namespace Shared.Models
         [Key]
         public int TiposDemandasId { get; set; }
         public string? TipoDemanda { get; set; }
+
+        override public string ToString()
+        {
+            return $"{TipoDemanda}";
+        }
     }
 }
