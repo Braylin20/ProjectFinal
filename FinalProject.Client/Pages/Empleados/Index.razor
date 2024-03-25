@@ -1,0 +1,69 @@
+﻿@page "/IndexEmpleado"
+
+@inject EmpleadoServices empleadoServices
+@rendermode InteractiveAuto
+
+<div class="card shadow-lg">
+    <div class="card-header">
+        <h3 class="text-white text-center">Index</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <label>Filtrar Por</label>
+                <InputSelect @bind-Value="Opcion" class="form-select">
+                    <option value="1">EmpleadoId</option>
+                    <option value="2">Fecha</option>
+                    <option value="4">Todo</option>
+                </InputSelect>
+            </div>
+            <div class="justify-content-end d-flex mb-4">
+                <a href="CreateEmpleado" class="btn btn-success bi-floppy-fill">Create</a>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="table-head text-white">EmpleadoId</th>
+                        <th class="table-head text-white">FechaCreacion</th>
+                        <th class="table-head text-white">Correo Electronico</th>
+                       
+                        <th class="table-head text-white">Opci&oacute;nes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ListaEmpleados)
+                    {
+                       
+                        <tr>
+                            <td>@item.EmpleadoId</td>
+                            <td>@item.FechaCreacion</td>
+                            <td>@item.Correo</td>
+                            
+                            <td>
+                                <a href="/DeleteEmpleado/@item.EmpleadoId" class="btn btn-danger bi bi-trash-fill"></a>
+                                <a href="/EditEmpleado/@item.EmpleadoId" class="btn btn-primary bi-box-arrow-up-right"></a>
+                                <a href="/View/" class="btn btn-warning bi bi-info-square"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    public List<Empleados>? ListaEmpleados = new List<Empleados>();
+    public int Opcion { get; set; }
+    public Demandas? demandas = new Demandas();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaEmpleados = await empleadoServices.GetEmpleados();
+        
+
+    }
+
+
+}

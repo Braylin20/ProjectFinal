@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Empleados\Delete.razor" />
+    <Content Remove="Pages\Empleados\Index.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazor.Bootstrap" Version="1.10.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.3" />
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
@@ -17,6 +22,24 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared1\Shared1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Empleados\Delete.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Empleados\Delete.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Empleados\Index.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Empleados\Delete.razor" />
+    <None Include="Pages\Empleados\Index.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Empleados\Index.razor" />
   </ItemGroup>
 
 </Project>
