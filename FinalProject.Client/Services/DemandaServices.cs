@@ -12,11 +12,16 @@ namespace FinalProject.Client.Services
                  .GetFromJsonAsync<List<Demandas>>("api/Demandas");
         }
 
-        public async Task<Demandas?> GetDemandas(int id)
+        public async Task<Demandas?> GetDemanda(int id)
         {
             return await httpClient
                 .GetFromJsonAsync<Demandas>($"api/Demandas/{id}");
         }
-
+        //public async Task<int?> GetIdDemanda(int id)
+        //{
+        //    var demanda =await httpClient
+        //        .GetFromJsonAsync<Demandas>($"api/Demandas/{id}");
+        //    return demanda!.DemandaId;
+        //}
     }
 }

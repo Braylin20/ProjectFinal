@@ -1,68 +1,84 @@
 ﻿@page "/CreateAudiencia"
 @rendermode InteractiveAuto
 @inject NotificationService notificationService
-@inject HttpClient httpClient
 @inject DemandaServices demandaServices
 @inject AudienciaServices audienciaServices
-<RadzenNotification/>
+@attribute [StreamRendering]
 
-<EditForm Model="Audiencia" OnValidSubmit="Guardar">
-    <DataAnnotationsValidator/>
+<RadzenNotification />
 
-    
-    <div class="container-fluid">
-        <div class="card shadow-lg w-50 mx-auto">
-            <div class="card-header">
-                <h3>Registro Audiencia</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <InputDate @bind-Value="Audiencia.FechaAudiencia" class="form-control" />
-                        <ValidationMessage For="@(()=>Audiencia.FechaAudiencia)" />
+
+@if(ListaDemandas is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <EditForm Model="Audiencia" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        
+        <div class="container-fluid">
+            <div class="card shadow-lg w-50 mx-auto">
+                <div class="card-header">
+                    <h3 class="text-center text-white">Registro Audiencia</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="fw-bold mb-2">Fecha de Audiencia</label>
+                            <InputDate @bind-Value="Audiencia.FechaAudiencia" class="form-control mb-3"/>
+                            <ValidationMessage For="@(()=>Audiencia.FechaAudiencia)" />
+                        </div>
+                        <div class="col-6">
+                            <label class="fw-bold mb-2">Demandas</label>
+                            <InputSelect @bind-Value="Audiencia.DemandaId" class="form-control">
+                                <option value="">Seleccione un tipo de demanda</option>
+                                @foreach (var demanda in ListaDemandas)
+                                {
+                                    <option value="@demanda.DemandaId">@demanda.TipoDemanda</option>
+                                }
+
+                            </InputSelect>
+                        </div>
+                        
                     </div>
-                    <div class="col-6">
-                        <InputSelect @bind-Value="Audiencia.DemandaId" class="form-control">
-                            <option value="">Seleccione un tipo de demanda</option>
-                            @foreach (var demanda in ListaDemandas)
-                            {
-                                <option value="@demanda.DemandaId">@demanda.TipoDemanda</option>
-                            }
-                            
-                        </InputSelect>
+                    <div class="row">
+                        <div>
+                            <label class="fw-bold mb-3">Comentario</label>
+                            <InputTextArea @bind-Value="Audiencia.Comentario" class="form-control" placeholder="Ingrese un comentario" />
+                            <ValidationMessage For="@(()=>Audiencia.Comentario)" />
+                        </div>
+
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <InputText @bind-Value="Audiencia.Comentario" class="form-control" />
-                        <ValidationMessage For="@(()=>Audiencia.Comentario)" />
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a href="IndexAudiencia" class="btn btn-secondary">Atr&aacute;s</a>
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
-                    
                 </div>
             </div>
-            <div class="card-footer">
-               <div class="btn-group">
-                   <button type="submit" class="btn btn-success">Guardar</button>
-               </div>
-            </div>
+            
         </div>
-    </div>
+    </EditForm>
+}
 
-</EditForm>
 
 @code {
     public Audiencias Audiencia { get; set; } = new Audiencias();
-    private IEnumerable<Demandas> ListaDemandas { get; set; } = new List<Demandas>();
+    private IEnumerable<Demandas>? ListaDemandas { get; set; } = new List<Demandas>();
 
     protected override async Task OnInitializedAsync()
     {
+        // await Task.Delay(1000);
         ListaDemandas = await demandaServices.GetDemandas();
+        Audiencia.FechaAudiencia = DateTime.Now;
     }
-    public void Guardar()
+    public async Task Guardar()
     {
-        var guardado = audienciaServices.Save(Audiencia);
+        var guardado = await audienciaServices.Save(Audiencia);
         if(guardado is null)
-    {
+        {
             var mensaje = new NotificationMessage
                 {
                     Severity = NotificationSeverity.Error,
@@ -82,7 +98,8 @@
                     Duration = 4_000
                 };
             notificationService.Notify(mensaje);
+            Audiencia = new Audiencias();
         }
-        
+
     }
 }

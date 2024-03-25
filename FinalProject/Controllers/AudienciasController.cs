@@ -18,7 +18,7 @@ namespace FinalProject.Controllers
 
         // GET: api/GetUsuarios/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Audiencias>> GetAudiencia(short id)
+        public async Task<ActionResult<Audiencias>> GetAudiencia(int id)
         {
             return await audienciasServices.GetAudiencia(id);
         }
@@ -30,6 +30,27 @@ namespace FinalProject.Controllers
         {
             var audienciaSaved = await audienciasServices.Save(audiencias);
             return Ok(audienciaSaved);
+        }
+        // GET: api/GetUsuarios/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Audiencias>> DeleteAudiencia(int id)
+        {
+            var eliminado = await audienciasServices.DeleteAudiencia(id);
+            if(!eliminado)
+            {
+                return StatusCode(500);
+            }
+            return Ok();
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Audiencias>> EditAudiencia( Audiencias audiencias)
+        {
+            var editado = await audienciasServices.Edit(audiencias);
+            if (!editado)
+            {
+                return StatusCode(500);
+            }
+            return Ok();
         }
     }
 }

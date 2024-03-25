@@ -15,6 +15,7 @@ namespace Shared.Models
         public int UsuarioId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public int Cedula { get; set; }
+        public int RolId { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Nombre { get; set; }
         [EmailAddress(ErrorMessage = "Este campo es requerido")]
@@ -24,8 +25,9 @@ namespace Shared.Models
         public DateTime FechaCreacion { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public long Telefono { get; set; }
-        [Required(ErrorMessage = "Este campo es requerido")]
-        public string? Rol { get; set; }
+        [ForeignKey("RolId")]
+        public Roles? Roles { get; set; }
+
         [ForeignKey("UsuarioId")]
         public ICollection<Expedientes> Expedientes { get; set; } = new List<Expedientes>();
         [ForeignKey("UsuarioId")]

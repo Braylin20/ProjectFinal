@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinalProject.Migrations
 {
     /// <inheritdoc />
-    public partial class a : Migration
+    public partial class g : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,19 @@ namespace FinalProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EstadosDemandas", x => x.EstadoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    RolId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.RolId);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,16 +86,22 @@ namespace FinalProject.Migrations
                     UsuarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Cedula = table.Column<int>(type: "int", nullable: false),
+                    RolId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Clave = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Telefono = table.Column<long>(type: "bigint", nullable: false),
-                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Telefono = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Roles_RolId",
+                        column: x => x.RolId,
+                        principalTable: "Roles",
+                        principalColumn: "RolId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +111,8 @@ namespace FinalProject.Migrations
                     SentenciaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ResolucionId = table.Column<int>(type: "int", nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NombreMinisterio = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NombreMinisterio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,8 +202,8 @@ namespace FinalProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Genero = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Genero = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,7 +249,8 @@ namespace FinalProject.Migrations
                     AudienciaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DemandaId = table.Column<int>(type: "int", nullable: false),
-                    FechaAudiencia = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FechaAudiencia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -363,6 +383,11 @@ namespace FinalProject.Migrations
                 name: "IX_Sentencias_ResolucionId",
                 table: "Sentencias",
                 column: "ResolucionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_RolId",
+                table: "Usuarios",
+                column: "RolId");
         }
 
         /// <inheritdoc />
@@ -409,6 +434,9 @@ namespace FinalProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoResoluciones");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

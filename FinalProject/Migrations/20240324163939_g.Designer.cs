@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240323225337_e")]
-    partial class e
+    [Migration("20240324163939_g")]
+    partial class g
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,6 +222,23 @@ namespace FinalProject.Migrations
                     b.ToTable("Niños");
                 });
 
+            modelBuilder.Entity("Shared.Models.Roles", b =>
+                {
+                    b.Property<int>("RolId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RolId"));
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RolId");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Shared.Models.Sentencias", b =>
                 {
                     b.Property<int>("SentenciaId")
@@ -304,14 +321,15 @@ namespace FinalProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rol")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
 
                     b.Property<long>("Telefono")
                         .HasColumnType("bigint");
 
                     b.HasKey("UsuarioId");
+
+                    b.HasIndex("RolId");
 
                     b.ToTable("Usuarios");
                 });
@@ -447,6 +465,17 @@ namespace FinalProject.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoResoluciones");
+                });
+
+            modelBuilder.Entity("Shared.Models.Usuarios", b =>
+                {
+                    b.HasOne("Shared.Models.Roles", "Roles")
+                        .WithMany()
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("Shared1.Detalles.ExpedientesDetalles", b =>

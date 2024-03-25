@@ -17,7 +17,7 @@ namespace FinalProject.Client.Services
             return await httpClient
                 .GetFromJsonAsync<Audiencias>($"api/Audiencias/{id}");
         }
-        public async Task<Audiencias> Save(Audiencias audiencia)
+        public async Task<Audiencias?> Save(Audiencias audiencia)
         {
             var audienciaGuardada = await httpClient
                 .PostAsJsonAsync("api/Audiencias", audiencia);
@@ -26,6 +26,19 @@ namespace FinalProject.Client.Services
                 return null;
             }
             return await audienciaGuardada.Content.ReadFromJsonAsync<Audiencias>();
+        }
+        public async Task Delete(int id)
+        {
+            await httpClient.DeleteAsync($"api/Audiencias/{id}");
+        }
+        public async Task<bool> Edit(int id, Audiencias audiencia)
+        {
+            var audienciaEditada=await httpClient.PutAsJsonAsync($"api/Audiencias/{id}", audiencia);
+            if (!audienciaEditada.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Shared.Models
         public int DemandaId { get; set; }
         public int TiposDemandasId { get; set; }
         public int EstadoId { get; set; }
+        public int AlguacilId { get; set; }
         public DateTime Fecha { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         public string? Descripcion { get; set; }
@@ -21,6 +22,8 @@ namespace Shared.Models
         public EstadosDemandas? EstadoDemanda { get; set; }
         [ForeignKey("TiposDemandasId")]
         public TiposDemandas? TipoDemanda { get; set; }
+        [ForeignKey("AlguacilId")]
+        public Alguaciles? Alguacil { get; set; }
         [ForeignKey("DemandaId")]
         public ICollection<Audiencias> Audiencias { get; set; } = new List<Audiencias>();
         [ForeignKey("DemandaId")]

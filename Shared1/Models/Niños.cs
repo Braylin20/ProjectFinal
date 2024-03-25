@@ -15,8 +15,8 @@ namespace Shared.Models
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public string? Nombre { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
-        public DateTime FechaNacimiento { get; set; }
-        [Required(ErrorMessage = "Este campo es obligatorio")]
         public string? Genero { get; set; }
+        [Required(ErrorMessage = "Este campo es obligatorio")]
+        public DateTime FechaNacimiento { get; set; }
     }
 }

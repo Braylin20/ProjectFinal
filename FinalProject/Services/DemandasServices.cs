@@ -9,7 +9,7 @@ public class DemandasServices(Context _context)
     public async Task<IEnumerable<Demandas>> GetDemandas()
     {
         return await _context.Demandas.Include(d => d.TipoDemanda).Include(d => d.Audiencias).Include(d => d.Demandados)
-            .Include(d => d.EstadoDemanda).Include(d => d.TipoDemanda)
+            .Include(d => d.EstadoDemanda).Include(d => d.TipoDemanda).Include(a=>a.Alguacil)
             .AsNoTracking().ToListAsync();
     }
 

@@ -30,7 +30,8 @@ namespace FinalProject.Services
                 .ThenInclude(e => e.ExpedientesDetalles)
                 .ThenInclude(e => e.Sentencia)
                 .ThenInclude(s => s!.TipoResoluciones).
-                Include(u=>u.Niños)
+                Include(u=>u.Niños).
+                Include(u=>u.Roles)
                 .AsNoTracking().ToListAsync();
         }
 

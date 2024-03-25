@@ -21,6 +21,8 @@ namespace FinalProject.Dal
         public DbSet<Niños> Niños { get; set; }
         public DbSet<EstadosDemandas> EstadosDemandas { get; set; }
         public DbSet<EmpleadoSentencia> EmpleadoSentencia { get; set; }
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Alguaciles> Alguaciles { get; set; }
 
 
 
