@@ -10,11 +10,11 @@ namespace FinalProject.Services
         public async Task<IEnumerable<Usuarios>> GetUsuarios()
         {
             return await _context.Usuarios.
-                Include(u=>u.Abogados).
-                Include(u=>u.Expedientes)
-                .ThenInclude(e=>e.ExpedientesDetalles)
-                .ThenInclude(e=>e.Demandas)
-                .ThenInclude(d=>d!.EstadoDemanda).
+                Include(u => u.Abogados).
+                Include(u => u.Expedientes)
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Demandas)
+                .ThenInclude(d => d!.EstadoDemanda).
                 Include(u => u.Expedientes)
                 .ThenInclude(e => e.ExpedientesDetalles)
                 .ThenInclude(e => e.Demandas)
@@ -24,14 +24,14 @@ namespace FinalProject.Services
                 .ThenInclude(e => e.Demandas)
                 .ThenInclude(d => d!.Demandados).
                 Include(u => u.Expedientes)
-                .ThenInclude(e=>e.ExpedientesDetalles)
-                .ThenInclude(e=>e.Sentencia).
+                .ThenInclude(e => e.ExpedientesDetalles)
+                .ThenInclude(e => e.Sentencia).
                 Include(u => u.Expedientes)
                 .ThenInclude(e => e.ExpedientesDetalles)
                 .ThenInclude(e => e.Sentencia)
                 .ThenInclude(s => s!.TipoResoluciones).
-                Include(u=>u.Niños).
-                Include(u=>u.Roles)
+                Include(u => u.Niños).
+                Include(u => u.Roles)
                 .AsNoTracking().ToListAsync();
         }
 
